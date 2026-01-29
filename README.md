@@ -1,47 +1,28 @@
-# รายละเอียดโปรเจค Liquidity Risk
+# Liquidity Risk Management
 
-โปรเจค Liquidity Risk นี้ถูกออกแบบมาเพื่อตรวจสอบและจัดการความเสี่ยงด้านสภาพคล่องในระบบการเงิน
+This repository contains resources and tools for assessing and managing liquidity risk in financial institutions. 
 
-## ขั้นตอนการสร้างโปรเจค
-1. ตรวจสอบให้แน่ใจว่าคุณได้ติดตั้ง [Node.js](https://nodejs.org/) และ [npm](https://www.npmjs.com/) ในเครื่องของคุณ
-2. ดาวน์โหลดโปรเจคนี้จาก GitHub:
-   ```bash
-   git clone https://github.com/KChanhom/Liquidity-Risk.git
-   ```
-3. ไปที่โฟลเดอร์โปรเจค:
-   ```bash
-   cd Liquidity-Risk
-   ```
-4. ติดตั้ง dependencies:
-   ```bash
-   npm install
-   ```
+## Features
+- Tools for liquidity risk measurement
+- Best practices for risk management
+- Case studies and examples
 
-## วิธีการรันโปรเจค
-คุณสามารถรันโปรเจคนี้ได้โดยใช้คำสั่ง:
+## Installation
+Ensure you have the required packages installed:
+
 ```bash
-npm start
+pip install -r requirements.txt
 ```
 
-## วิธีการรันทดสอบ
-เพื่อรันทดสอบโปรเจค ให้อ้างอิงคำสั่งต่อไปนี้:
+## Usage
+To run the analysis tools, use:
+
 ```bash
-npm test
+python liquidity_analysis.py
 ```
 
-## ผลลัพธ์ที่คาดหวังและตัวอย่างผลลัพธ์
-- ระบบควรจะแสดงผลลัพธ์ที่ช่วยในการประเมินสภาพคล่องตามเป้าหมาย
-- ตัวอย่างผลลัพธ์:
-```
-Liquidity Risk Assessment: [มูลค่า]
-Predictive Analysis: [มูลค่า]
-```
+## Contributing
+Contributions are welcome! Please create an issue or a pull request if you have suggestions or improvements.
 
-## อธิบายรายละเอียดของระบบ
-- **ระบบหลัก**: ประกอบด้วยโมดูลต่าง ๆ ที่รับผิดชอบในการคำนวณและประเมินความเสี่ยง
-- **ข้อมูลการทำงาน**: ข้อมูลทั้งหมดจะถูกเก็บในฐานข้อมูลและจะถูกดึงมาเพื่อประมวลผลในแต่ละขั้นตอน
-
-## แผนภาพการออกแบบ/การไหลของข้อมูล
-![Data Flow Diagram](path/to/your/diagram.png)
-
-ในแผนภาพจะเห็นการเชื่อมต่อระหว่างโมดูลต่าง ๆ และวิธีการที่ข้อมูลถูกส่งผ่านในระบบ
+## License
+This project is licensed under the MIT License.
