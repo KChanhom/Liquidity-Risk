@@ -1,76 +1,47 @@
-# Liquidity Risk: Intraday Liquidity & LCR/NSFR (PySpark)
+# รายละเอียดโปรเจค Liquidity Risk
 
-โปรเจกต์ตัวอย่างสำหรับธนาคาร: “Calculator + Monitoring” คำนวณ/ติดตามสภาพคล่องรายวันหรือรายชั่วโมงจาก
-ธุรกรรมเข้า-ออก, เงินฝาก, วงเงิน, settlement, cashflow future พร้อม data quality checks และ anomaly flags
+โปรเจค Liquidity Risk นี้ถูกออกแบบมาเพื่อตรวจสอบและจัดการความเสี่ยงด้านสภาพคล่องในระบบการเงิน
 
-## โครงสร้าง
+## ขั้นตอนการสร้างโปรเจค
+1. ตรวจสอบให้แน่ใจว่าคุณได้ติดตั้ง [Node.js](https://nodejs.org/) และ [npm](https://www.npmjs.com/) ในเครื่องของคุณ
+2. ดาวน์โหลดโปรเจคนี้จาก GitHub:
+   ```bash
+   git clone https://github.com/KChanhom/Liquidity-Risk.git
+   ```
+3. ไปที่โฟลเดอร์โปรเจค:
+   ```bash
+   cd Liquidity-Risk
+   ```
+4. ติดตั้ง dependencies:
+   ```bash
+   npm install
+   ```
 
-- `src/liquidity_risk/` โค้ดหลัก (datasets, features, dq, utils)
-- `jobs/` spark-submit entrypoints
-- `configs/` ไฟล์ config (YAML)
-- `data/` (local) โฟลเดอร์ output Parquet
-- `tests/` unit tests (PyTest)
-- `scripts/` helper scripts สำหรับรันตัวอย่าง
-
-## ติดตั้ง
-
-ต้องมี Python 3.10+ และ Spark 3.x (ที่มี `pyspark` ใน environment)
-
+## วิธีการรันโปรเจค
+คุณสามารถรันโปรเจคนี้ได้โดยใช้คำสั่ง:
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+npm start
 ```
 
-## รัน end-to-end (local)
-
-รันแบบรวดเดียว:
-
+## วิธีการรันทดสอบ
+เพื่อรันทดสอบโปรเจค ให้อ้างอิงคำสั่งต่อไปนี้:
 ```bash
-bash scripts/run_local.sh configs/local.yml
+npm test
 ```
 
-1) สร้างข้อมูลจำลอง (transactions/balances/cashflows/collateral/limits) เป็น Parquet
-
-```bash
-spark-submit \
-  --master "local[*]" \
-  jobs/01_generate_synthetic.py \
-  --config configs/local.yml
+## ผลลัพธ์ที่คาดหวังและตัวอย่างผลลัพธ์
+- ระบบควรจะแสดงผลลัพธ์ที่ช่วยในการประเมินสภาพคล่องตามเป้าหมาย
+- ตัวอย่างผลลัพธ์:
+```
+Liquidity Risk Assessment: [มูลค่า]
+Predictive Analysis: [มูลค่า]
 ```
 
-2) สร้าง daily/hourly liquidity snapshots + anomaly flags + DQ checks
+## อธิบายรายละเอียดของระบบ
+- **ระบบหลัก**: ประกอบด้วยโมดูลต่าง ๆ ที่รับผิดชอบในการคำนวณและประเมินความเสี่ยง
+- **ข้อมูลการทำงาน**: ข้อมูลทั้งหมดจะถูกเก็บในฐานข้อมูลและจะถูกดึงมาเพื่อประมวลผลในแต่ละขั้นตอน
 
-```bash
-spark-submit \
-  --master "local[*]" \
-  jobs/02_liquidity_monitoring.py \
-  --config configs/local.yml
-```
+## แผนภาพการออกแบบ/การไหลของข้อมูล
+![Data Flow Diagram](path/to/your/diagram.png)
 
-ผลลัพธ์จะถูกเขียนลง `data/out/` เป็น Parquet (partitioned)
-โดยหลัก ๆ จะได้:
-
-- `data/out/dq_results/` ผล data quality checks
-- `data/out/intraday_snapshots/` intraday bucket snapshots + liquidity-drop flags
-- `data/out/daily_snapshots/` daily snapshots + anomaly flags
-- `data/out/limit_utilization/` utilization ต่อ counterparty เทียบ settlement limits
-
-## สิ่งที่คำนวณ (หลัก ๆ)
-
-- Net cashflow by time bucket (intraday buckets)
-- Concentration risk: top counterparties (สัดส่วนและอันดับ)
-- Maturity ladder (กำหนด bucket ตาม maturity_date)
-- Daily snapshots + anomaly flags (เช่น drop ผิดปกติ, limit utilization สูงผิดปกติ)
-- Data quality checks (schema/key nulls, duplicates, volume sanity)
-
-## Tests
-
-```bash
-pytest -q
-```
-
-## Performance
-
-ดูตัวอย่าง partitioning/repartition/caching/bucketing ได้ที่ `docs/performance.md`
-
+ในแผนภาพจะเห็นการเชื่อมต่อระหว่างโมดูลต่าง ๆ และวิธีการที่ข้อมูลถูกส่งผ่านในระบบ
