@@ -1,0 +1,31 @@
+app:
+  name: "liquidity-risk-local"
+
+io:
+  base_path: "data"
+  raw_path: "data/raw"
+  out_path: "data/out"
+
+synthetic:
+  seed: 42
+  as_of_date: "2026-01-23"
+  days: 3
+  tx_per_day: 20000
+  counterparties: 250
+  accounts: 2000
+  currencies: ["THB", "USD"]
+
+time_buckets:
+  granularity: "hour"         # hour or 30min (hour implemented in this starter)
+  timezone: "Asia/Bangkok"
+
+monitoring:
+  liquidity_drop_zscore_threshold: 3.0
+  top_counterparties_n: 10
+  concentration_share_threshold: 0.20
+  limit_warning_threshold: 0.90
+  limit_breach_threshold: 1.00
+
+performance:
+  repartition_by_date: 8
+  cache_intermediate: true
